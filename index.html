@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* GLOBAL */
 body {
   margin: 0;
   font-family: "Hind Siliguri", sans-serif;
@@ -41,7 +40,6 @@ body {
   transform: translateY(0);
 }
 
-/* BUTTON */
 .btn {
   background: linear-gradient(135deg, #00ffd1, #00aaff);
   padding: 14px 28px;
@@ -60,7 +58,6 @@ body {
   box-shadow: 0 0 35px rgba(0,255,209,0.6);
 }
 
-/* INPUT */
 input {
   width: 80%;
   padding: 14px;
@@ -74,7 +71,6 @@ input {
   text-align: center;
 }
 
-/* SLOT MACHINE */
 .slot-box {
   width: 260px;
   height: 120px;
@@ -101,7 +97,6 @@ input {
   text-shadow: 0 0 20px rgba(0,255,209,0.8);
 }
 
-/* RESULT */
 .result-box {
   background: rgba(255,255,255,0.05);
   padding: 20px;
@@ -129,7 +124,6 @@ input {
 
   <div class="slot-box">
     <div id="slotStrip" class="slot-strip">
-      <!-- fake numbers -->
       <div class="slot-num">07</div>
       <div class="slot-num">23</div>
       <div class="slot-num">45</div>
@@ -155,6 +149,10 @@ input {
 </div>
 
 <script>
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+const step3 = document.getElementById("step3");
+
 function goStep2() {
   const name = document.getElementById("nameInput").value.trim();
   if (!name) return alert("আগে নাম লিখো!");
