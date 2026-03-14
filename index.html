@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <title>Premium Eid Salami Machine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font: Hind Siliguri -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #050712;
+      --bg-card: rgba(15, 18, 35, 0.9);
+      --accent: #00ffd1;
+      --accent-soft: rgba(0, 255, 209, 0.2);
+      --accent-2: #ffb347;
+      --text-main: #f5f7ff;
+      --text-soft: #a4a9c8;
+      --danger: #ff4b6e;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.65);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --blur-card: 22px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.28s ease-out;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Hind Siliguri", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, #1b1f3b 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, #2b1038 0, transparent 55%),
+        radial-gradient(circle at 100% 0%, #0b3b3a 0, transparent 55%),
+        #02030a;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .glow-orbit {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .glow-orbit::before,
+    .glow-orbit::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.35;
+      mix-blend-mode: screen;
+    }
+
+    .glow-orbit::before {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #00ffd1, transparent 60%);
+      top: -120px;
+      left: -80px;
+    }
+
+    .glow-orbit::after {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, #ff4b6e, transparent 60%);
+      bottom: -160px;
+      right: -120px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 520px;
+      background: radial-gradient(circle at top left, rgba(0, 255, 209, 0.12), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(255, 75, 110, 0.12), transparent 55%),
+                  rgba(3, 6, 24, 0.9);
+      border-radius: 32px;
+      padding: 2px;
+      position: relative;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02), var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        conic-gradient(from 210deg,
+          rgba(0, 255, 209, 0.15),
+          rgba(255, 179, 71, 0.08),
+          rgba(255, 75, 110, 0.18),
+          rgba(0, 255, 209, 0.15));
+      opacity: 0.7;
+      filter: blur(40px);
+      z-index: -1;
+      animation: spin 18s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .card {
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 60%),
+                  rgba(4, 7, 28, 0.96);
+      border-radius: 30px;
+      padding: 28px 24px 24px;
+      backdrop-filter: blur(var(--blur-card));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.04) 0, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.04) 100%);
+      opacity: 0.4;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      opacity: 0.9;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title span.highlight {
+      background: linear-gradient(120deg, #00ffd1, #ffb347, #ff4b6e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .eid-pill {
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at top left, rgba(0, 255, 209, 0.16), transparent 60%);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .eid-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00ffd1, transparent 60%);
+      box-shadow: 0 0 12px rgba(0, 255, 209, 0.8);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .input-field {
+      flex: 1;
+      position: relative;
+    }
+
+    .input-field input {
+      width: 100%;
+      padding: 12px 14px 11px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.02), transparent 60%),
+                  rgba(3, 6, 24, 0.9);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .input-field input::placeholder {
+      color: rgba(164, 169, 200, 0.7);
+    }
+
+    .input-field input:focus {
+      border-color: rgba(0, 255, 209, 0.7);
+      box-shadow: 0 0 0 1px rgba(0, 255, 209, 0.35);
+      background: radial-gradient(circle at top left, rgba(0, 255, 209, 0.08), transparent 60%),
+                  rgba(3, 6, 24, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 0 18px;
+      border-radius: 16px;
+      border: none;
+      background: radial-gradient(circle at top left, #00ffd1, #00c2ff);
+      color: #02030a;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 14px 30px rgba(0, 255, 209, 0.35);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      white-space: nowrap;
+      min-width: 120px;
+      height: 42px;
+    }
+
+    .btn-primary span.icon {
+      font-size: 16px;
+      transform: translateY(1px);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 18px 40px rgba(0, 255, 209, 0.45);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(0, 255, 209, 0.3);
+      filter: brightness(0.98);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+      filter: none;
+    }
+
+    .error-text {
+      font-size: 12px;
+      color: var(--danger);
+      margin-bottom: 6px;
+      min-height: 16px;
+    }
+
+    .slot-shell {
+      margin-top: 10px;
+      padding: 16px 14px 18px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 60%),
+        linear-gradient(135deg, rgba(0, 255, 209, 0.12), rgba(255, 75, 110, 0.12));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slot-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.12) 0, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.12) 100%);
+      opacity: 0;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      transition: opacity var(--transition-med);
+    }
+
+    .slot-shell.active::before {
+      opacity: 0.7;
+      animation: shimmer 1.2s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-20%); }
+      100% { transform: translateX(20%); }
+    }
+
+    .slot-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(245, 247, 255, 0.7);
+    }
+
+    .slot-top span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slot-top span.label-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffb347, transparent 60%);
+      box-shadow: 0 0 10px rgba(255, 179, 71, 0.9);
+    }
+
+    .slot-window {
+      position: relative;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, rgba(0, 0, 0, 0.4), transparent 70%),
+                  linear-gradient(145deg, #050712, #050712);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      padding: 10px 12px;
+    }
+
+    .slot-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 64px;
+      position: relative;
+    }
+
+    .slot-column {
+      flex: 1;
+      height: 100%;
+      border-radius: 12px;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 70%),
+                  linear-gradient(180deg, #050712, #050712);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6);
+    }
+
+    .slot-strip {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 6px;
+      transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .slot-number {
+      font-size: 26px;
+      font-weight: 700;
+      color: #f5f7ff;
+      text-shadow: 0 0 18px rgba(0, 255, 209, 0.6);
+      margin: 2px 0;
+    }
+
+    .slot-number.dim {
+      opacity: 0.25;
+      text-shadow: none;
+      font-size: 18px;
+    }
+
+    .slot-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0, 255, 209, 0.18), transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .slot-shell.revealed .slot-glow {
+      opacity: 1;
+    }
+
+    .slot-amount-tag {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top left, rgba(0, 255, 209, 0.3), rgba(0, 194, 255, 0.2));
+      border: 1px solid rgba(0, 255, 209, 0.7);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #02030a;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 24px rgba(0, 255, 209, 0.45);
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+      transition: opacity var(--transition-med), transform var(--transition-med);
+    }
+
+    .slot-shell.revealed .slot-amount-tag {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .slot-amount-tag span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #02030a;
+    }
+
+    .wish-block {
+      margin-top: 18px;
+      padding: 14px 14px 16px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at top left, rgba(0, 255, 209, 0.12), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(255, 75, 110, 0.12), transparent 60%),
+        rgba(3, 6, 24, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity var(--transition-med), transform var(--transition-med);
+    }
+
+    .wish-block::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0, transparent 40%, transparent 60%, rgba(255, 255, 255, 0.06) 100%);
+      opacity: 0.35;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .wish-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(164, 169, 200, 0.9);
+      margin-bottom: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wish-label span.line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(164, 169, 200, 0.6), transparent);
+      opacity: 0.6;
+    }
+
+    .wish-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-main);
+      text-shadow: 0 0 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .wish-text span.name {
+      background: linear-gradient(120deg, #00ffd1, #ffb347, #ff4b6e);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+
+    .wish-text span.amount {
+      color: #00ffd1;
+      font-weight: 700;
+    }
+
+    .wish-sub {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 11px;
+      color: rgba(164, 169, 200, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .footer-note span.accent {
+      color: var(--accent-2);
+      font-weight: 600;
+    }
+
+    .footer-note span.brand {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(164, 169, 200, 0.8);
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 22px 18px 18px;
+      }
+      .title {
+        font-size: 21px;
+      }
+      .input-row {
+        flex-direction: column;
+      }
+      .btn-primary {
+        width: 100%;
+        justify-content: center;
+      }
+      .slot-inner {
+        height: 58px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orbit"></div>
+
+  <div class="shell">
+    <div class="card">
+      <div class="card-header">
+        <div class="title-block">
+          <div class="eyebrow">Eid 2026 • Salami Drop</div>
+          <div class="title">
+            <span class="highlight">Premium</span> Salami Machine
+          </div>
+        </div>
+        <div class="eid-pill">
+          <span class="eid-dot"></span>
+          EID MODE
+        </div>
+      </div>
+
+      <p class="subtitle">
+        nijer <strong>naam ta likhe</strong> ekbar spin dao—random vabe ১ theke ১০০ er moddhe ekta
+        <strong>special salami</strong> uthbe, shathe thakbe ekta chhoto premium wish.
+      </p>
+
+      <div class="error-text" id="errorText"></div>
+
+      <div class="input-row">
+        <div class="input-field">
+          <input id="nameInput" type="text" placeholder="tomar naam likho (উদাহরণ: আরাফাত, সাদিয়া)" />
+        </div>
+        <button class="btn-primary" id="spinButton">
+          <span class="icon">✨</span>
+          <span>Spin Salami</span>
+        </button>
+      </div>
+
+      <div class="slot-shell" id="slotShell">
+        <div class="slot-top">
+          <span class="label">
+            <span class="label-dot"></span>
+            Random Salami
+          </span>
+          <span>৳১ — ৳১০০</span>
+        </div>
+
+        <div class="slot-window">
+          <div class="slot-inner">
+            <div class="slot-column">
+              <div class="slot-strip" id="slotStrip">
+                <div class="slot-number dim">07</div>
+                <div class="slot-number dim">23</div>
+                <div class="slot-number dim">45</div>
+                <div class="slot-number dim">62</div>
+                <div class="slot-number dim">89</div>
+                <div class="slot-number" id="slotMain">00</div>
+              </div>
+              <div class="slot-glow"></div>
+            </div>
+          </div>
+          <div class="slot-amount-tag" id="amountTag">
+            <span class="dot"></span>
+            <span id="amountTagText">৳০০</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wish-block" id="wishBlock">
+        <div class="wish-label">
+          <span>Premium Eid Wish</span>
+          <span class="line"></span>
+        </div>
+        <div class="wish-text" id="wishText"></div>
+        <div class="wish-sub" id="wishSub"></div>
+      </div>
+
+      <div class="footer-note">
+        <span>ei salami shudhu <span class="accent">mood uplift</span> er jonno—real taka chai, ammu/baba ke bolo 😄</span>
+        <span class="brand">EID • 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const nameInput = document.getElementById("nameInput");
+    const spinButton = document.getElementById("spinButton");
+    const errorText = document.getElementById("errorText");
+    const slotShell = document.getElementById("slotShell");
+    const slotStrip = document.getElementById("slotStrip");
+    const slotMain = document.getElementById("slotMain");
+    const amountTag = document.getElementById("amountTag");
+    const amountTagText = document.getElementById("amountTagText");
+    const wishBlock = document.getElementById("wishBlock");
+    const wishText = document.getElementById("wishText");
+    const wishSub = document.getElementById("wishSub");
+
+    let spinning = false;
+
+    function formatAmount(n) {
+      return n.toString().padStart(2, "0");
+    }
+
+    function randomSalami() {
+      return Math.floor(Math.random() * 100) + 1;
+    }
+
+    function randomChoice(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function buildWish(name, amount) {
+      const baseName = name || "বন্ধু";
+
+      const mainTemplates = [
+        `প্রিয় <span class="name">${baseName}</span>, তোমার জন্য আজকের premium salami holo <span class="amount">৳${amount}</span> — আল্লাহ তোমার rizq, shanti আর হাসি baruk baruk kore barie din.`,
+        `<span class="name">${baseName}</span>, ei Eid e tomar pocket officially upgrade hoye gelo! আজকের salami: <span class="amount">৳${amount}</span> — du'a kori tomar jibon tao emni bhabe upgrade hote thakuk.`,
+        `আজকের Eid-special spin e <span class="name">${baseName}</span> peyecho <span class="amount">৳${amount}</span> salami — tomar sob chhoto-boro ichchha gulo ekek kore puron hok, in shaa Allah.`,
+        `<span class="name">${baseName}</span>, ei chhoto salami <span class="amount">৳${amount}</span> diye shuru hok ekta boro হাসি — tomar din, tomar Eid, আর tomar ভবিষ্যৎ hok আলোর মত উজ্জ্বল.`,
+        `আজকের premium salami ticket ta gelo <span class="name">${baseName}</span> er hate — amount <span class="amount">৳${amount}</span>! আল্লাহ তোমার হৃদয়টা ke rakuk হালকা, আর পথটা rakuk সহজ আর সুন্দর.`
+      ];
+
+      const subTemplates = [
+        "nijer jonno, family r jonno, আর sob প্রিয় মানুষ der jonno ekta chhoto du'a korte bhulo na.",
+        "Eid মানেই শুধু salami na—একটু extra ভালোবাসা, ক্ষমা আর একসাথে হাসি share korar নামও Eid.",
+        "tomar হাসি ta jeno ajker রাতের তারার cheyeo beshi ঝলমলে hoye uthuk.",
+        "joto chhoto khushi, sob gulo jeno একসাথে মিলিয়ে ekta বড় শান্তি hoye jai tomar jonno.",
+        "আজকের রাত, আজকের du'a আর আজকের হাসি—sob kichু jeno tomar jibon e ekta নরম আলো hoye thake."
+      ];
+
+      return {
+        main: randomChoice(mainTemplates),
+        sub: randomChoice(subTemplates)
+      };
+    }
+
+    function animateSlotTo(amount) {
+      const fakeNumbers = [7, 23, 45, 62, 89];
+      const lastIndex = fakeNumbers.length;
+      slotStrip.style.transition = "none";
+      slotStrip.style.transform = "translateY(0)";
+      void slotStrip.offsetWidth;
+
+      const spinRounds = 3;
+      const totalHeight = 64;
+      const finalOffset = -((spinRounds * (lastIndex + 1) + lastIndex) * (totalHeight / (lastIndex + 1)));
+
+      slotStrip.style.transition = "transform 1.1s cubic-bezier(0.18, 0.8, 0.25, 1)";
+      slotStrip.style.transform = `translateY(${finalOffset}px)`;
+
+      setTimeout(() => {
+        slotStrip.style.transition = "none";
+        slotStrip.style.transform = "translateY(0)";
+        slotMain.textContent = formatAmount(amount);
+      }, 1150);
+    }
+
+    function revealWish(name, amount) {
+      const { main, sub } = buildWish(name, amount);
+      wishText.innerHTML = main;
+      wishSub.textContent = sub;
+
+      amountTagText.textContent = `৳${formatAmount(amount)}`;
+
+      slotShell.classList.add("revealed");
+      wishBlock.style.opacity = "1";
+      wishBlock.style.transform = "translateY(0)";
+    }
+
+    function resetVisual() {
+      slotShell.classList.remove("revealed");
+      wishBlock.style.opacity = "0";
+      wishBlock.style.transform = "translateY(8px)";
+      errorText.textContent = "";
+    }
+
+    spinButton.addEventListener("click", () => {
+      if (spinning) return;
+
+      const rawName = nameInput.value.trim();
+      if (!rawName) {
+        errorText.textContent = "আগে তোমার নাম ta likho, tarpor spin dao ✨";
+        return;
+      }
+
+      spinning = true;
+      resetVisual();
+      slotShell.classList.add("active");
+      spinButton.disabled = true;
+      spinButton.querySelector("span.icon").textContent = "🎰";
+      spinButton.querySelector("span:nth-child(2)").textContent = "Spinning...";
+
+      const amount = randomSalami();
+      animateSlotTo(amount);
+
+      setTimeout(() => {
+        slotShell.classList.remove("active");
+        revealWish(rawName, amount);
+        spinButton.disabled = false;
+        spinButton.querySelector("span.icon").textContent = "✨";
+        spinButton.querySelector("span:nth-child(2)").textContent = "Spin Again";
+        spinning = false;
+      }, 1300);
+    });
+
+    nameInput.addEventListener("input", () => {
+      if (nameInput.value.trim()) {
+        errorText.textContent = "";
+      }
+    });
+  </script>
+</body>
+</html>
